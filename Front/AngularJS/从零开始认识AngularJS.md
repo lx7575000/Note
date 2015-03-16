@@ -442,7 +442,100 @@ angular.module('myApp', function(greetProvider){
 **重点来了：**
 `ng-options="country.id as country.desc for country in countries"`
 
+* 语法中的 country.id作为value值而存在，可以更改为其他（比如country.desc或country）, **as**后面的值则作为显示而存在。
 * 第一步，先将countries中的元素依次循环赋值到country中。
 * 第二步，创建了一个option元素，其中country.id作为option中的value属性， country.desc作为实际显示而被创建出来到option中。
 
 **切记，这种创建方法select的初始值仍为空，所以还需要设定一个空值备选框才好。**
+
+####`radio Button` controls
+```
+<body ng-controller="UserController">  Hey, what do you love?  <form name="myform"><input type="radio" ng-model="user.choice" value="Coffee" /> ➥Coffee<input type="radio" ng-model="user.choice" value="Beer" /> ➥Beer</form>  <div>I love: {{user.choice}}</div></body>
+ <script type="text/javascript">    angular.module('myApp', []).controller('UserController',function($scope) { $scope.user = {};    });  </script>
+```
+
+####`checkbox` controls
+```
+<body ng-controller="UserController">  Hey, do you love coffee?  <form name="myform">    <input type="checkbox" ng-model="user.choice" />Coffee  </form>  <div>{{user.choice}}</div></body>
+```
+
+如果选中，则user.choice的值被设为true，否则为false。
+当然，如果你认为true和false没办法提现你的逼格的话，可以通过`ng-true-value`和`ng-false-value`来设定以提升逼格。		
+
+```
+<input type="checkbox" ng-model="user.choice" ng-true-value="yes" ➥ ng-false-value="no"/>Coffee
+```
+**看了就可以明白，就是把true和false逼格提高的定制成了你自己喜欢的设定。**
+
+####AngularJS Form Validation
+	在form标签的区域内，AngularJS会自动生成一个控制器FormController用于管理该区域。
+<hr>
+1. **ng-maxlength:** 在输入区域内所能输入的字符串最大长度
+2. **ng-minlength:** 在输入区域内要求输入的最小长度
+3. **ng-required:**  强制性的标记字段4. **ng-pattern:**   按照要求格式来进行填写
+5. **ng-required:**  表单中必须要求填写，推荐与 1 和 2 联合使用。
+
+**以上几个条件判断的选项，可以放入到`ng-hide`, `ng-show` or maybe `ng-if`中。**
+**关于各个条件判断的作用在此不详述，反正我明白，你们不懂的自己去google。**
+<hr>
+
+**假设我们设定的form标签的名字为'myform', 则该名字会被传递给更上层的控制器，并存储到上次控制器的`$scope`中。**
+	
+##### myform拥有很多有用的属性：（以下条件属性在单个标签中仍然有效）
+1. `$pristine`: 该属性用于条件判断，判断用户是否与表单form开始进行交互操作（即用户没有输入任何东西），初始值为true。
+2. `$dirty`:与上条命令相似，不过功能刚好相反，初始时值为false。
+3. `$valid`: 用于判断全局情况的，如果表单中的元素都按照预定要求完成或达到最低标准，则valid的值为true。(可以理解成在注册页面中用于判断是否所有要求的选项都填写完整。)
+4. ` $invalid`:这个就不用说了，肯定和上面那个刚好相反。
+
+####`$error`内置命令
+`error`中存储了所有在表单中交互错误时的信息（字符串形式哦）。		
+**举点栗子：**
+		
+	1. ng-required: form.fieldName.$error.required 		
+	2. ng-maxlength: form.fieldName.$error.maxlength 		
+	3. ng-minlength: form.fieldName.$error.minlength 		
+	4. ng-pattern: form.fieldName.$error.pattern
+
+以下代码示例用于帮助理解：**只有在内容被改变且不符合要求的时候，提示才会显示。**		
+```
+<span class="error-message" ng-show="myform.firstname.$dirty &&
+myform.firstname.$error.required">		
+</span>
+```		
+<hr>
+
+**AngularJS的条件也可以和CSS规则合用。**
+
+```
+input.ng-dirty.ng-invalid{    border-color:red;}
+.error-message {    color: red;}
+```
+<hr>
+####使用`ng-form`命令
+	切记，ng-form不能够代替form。ng-form的作用在于将统一块的组件组合在一起，同时判断他们的有效性。
+
+#####`ng-model-options`命令：(该命令是在1.3版本以后才存在的)
+**有些时候你希望通过鼠标移动到组件上，或者进行键盘输入时候会触发不同事件来进行model的同步更新。我们就可以通过ng-model-options的方式来实现。**		
+
+**举多个栗子：**		
+
+* 单个触发事件
+
+`<input type="text" ng-model="firstname" ng-model-options="{updateOn: 'blur'}" />`	
+	
+* 多个触发事件
+
+`<input type="text" ng-model="firstname" ng-model-options=" {updateOn: 'blur mousedown'}" />`		
+
+* 多个触发事件，同时包含默认触发		
+
+`<input type="text" ng-model="firstname" ng-model-options=" {updateOn: ' default blur mousedown'}" />`
+
+* 也可以通过定时更新的形式来做(注意下面的 **debounce** 关键字，这个是用于延时的)
+
+
+`<input type="text" ng-model="firstname" ng-model-options=" {updateOn: 'blur', debounce:100}" />`
+
+* 更傲娇的定时更新同步方法
+
+`<input type="text" ng-model="firstname" ng-model-options=" {updateOn: 'blur', debounce:{default: 100, blur:200}}" />`
