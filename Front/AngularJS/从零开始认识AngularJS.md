@@ -58,6 +58,8 @@ app.controller('MyController',['$scope', function($scope){
 <hr>
 ###AngularJS `$scope`
 <hr>
+<h4>directive中的数据绑定示意图。</h4>
+<img src='http://www.hubwiz.com/course/54f3ba65e564e50cfccbad4b/img/0026.png'>
 
 * **scope是一种空白的Javascript对象容器，其中可以存储属性和方法**
 ####Angular中的$scope
@@ -539,3 +541,60 @@ input.ng-dirty.ng-invalid{    border-color:red;}
 * 更傲娇的定时更新同步方法
 
 `<input type="text" ng-model="firstname" ng-model-options=" {updateOn: 'blur', debounce:{default: 100, blur:200}}" />`
+
+<hr>
+###AngularJS的`promise`
+* `promise`可以被理解为`controller`调用`service`或者其他函数方法(必须为异步的，不影响controller执行其他操作)。			
+<br>
+* 此时的`service`如果成功调用就相当于达成了`promise`，然后根据返回的不同结果来进一步判下一步该怎么做。只要能够按照要求返回预计内的内容不论是否表示成功，我们都称之为达成了`promise`.还有特殊情况，如果没法返回没法预计的结果则需要另行处理。
+
+**伪代码栗子，便于理解**		
+	栗子中的，`$q.defer()`创建了一个deferred对象，它与promise有所联系, 可以通过defer.promise属性来得到promise对象。
+
+```
+function getPromise(){    var deferred=$q.defer(); // Line 1 : Creates a new deferredobject    doAsyncTask(function(err,data){        if(err)			deferred.reject('Promise Rejected'); 
+		// Reject the Promise associated with the deferred object        else            deferred.resolve('Promise Resolved'); 
+		// Resolve the Promise associated with the deferred object 
+		});		return deferred.promise; 		//return the Promise associated with the deferred object}
+```
+**promise对象的`then`方法，含有三个方法**		
+
+`promise.then(successCallback,failureCallback,notifyCallback);`		
+	
+	1. 如果defer能够达到你预想的要求，则调用resolve方法来进行进一步的处理。	
+	2. 如果遇到错误，则调用reject方法。进行错误时候的处理。
+	3. 最后一种情况则会返回通知的回调函数。
+	
+**在一个promise中不论有多少个then，只会执行一次resolve或者reject。promise关心的只是结果，其他的一律不关心。**
+
+**缩写：**如果promise只关心是否出现错误的话，可以使用缩写的方法来做。
+
+`promise.cache(errorCallback)`		
+
+**	上述方法等价于**
+
+`promise.then(null, errorCallback)`
+	
+另外，如果**傲娇**的你既不关心resolve也不关注reject,就可以使用`promise.finally`方法来执行第三种notify的情况。
+	
+	更加傲娇的是IE8，因为finally是JS的保留关键字，所以要使用promise['finally'](callback)的方法来满足IE8的小心思。
+
+**Promise链：**			
+
+```
+promise.then(function(message) {				
+  //we have our message here  return getAnotherPromise(); //return a promise here again}).then(function(message) {  //handle the final result});
+```
+如上所示，在promise中验证完一个resolve之后，如果需要一系列的流程，则可以通过返回另一个promise来进行后面`then`的验证。
+**简单的天气预报**
+<hr>
+####`ng-src`命令
+在AngularjS中，如果想要能够动态的更新或者读取某些地址的资源，可以使用`ng-src`的方式得到。			
+**例子：**		
+`<img ng-src = 'app/resource/img/{{资源图片的名字或者编号....}}'>`
+
+<br/>
+
+上面的例子中若想要可以动态的访问或者说能够通过地址中通过表达式的形式来方便的得到各个资源地址，就必须使用`ng-src`.这是因为只有这种方法AngularJS会等待全部初始化结束后才通过得到的表达式的值进行加载。
+
+之所以不能用原来的 `src`方式来进行，是因为此时只会返回'app/resource/img/{{资源图片的名字或者编号....}}'的链接形式。明显不符合我们的预期要求。
