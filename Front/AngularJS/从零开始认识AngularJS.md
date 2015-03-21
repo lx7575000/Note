@@ -115,7 +115,7 @@ $scope.$watchCollection('myCollection',function(newCollection, oldCollection){ 
 
 该方法具有两个参数，分别为**route name** 和 **route definition object**。
 
-	第一个参数用于表示该路径， 第二个参数则是用于说明该路径的各种细节。
+	第一个参数用于表示URL显示路径， 第二个参数则是用于说明该路径的各种细节。
 	其中最常使用的属性为：		
 		controller： 用于与该路径页面相绑定。
 		templateUrl： 显然用于说明该页面模板所存放的路径位置。
@@ -123,9 +123,9 @@ $scope.$watchCollection('myCollection',function(newCollection, oldCollection){ 
 **注* 关于`controller` 是可选的，对于其与模板相联系也可以在页面中通过 ng-controller来相连。**	
 **另注* `routeProvider`定义在ngRoute 模块中，该模块并不在angular.js文件中而是被分到了angular-route.js文件中。同时需要将ngRoute模块依赖注入到模块`module`当中**		
 ##### `html5Mode`
-<pre>
+```
 angular.module('myApp').config(function($routeProvider, ➥$locationProvider){});$routeProvider.when('/view1',{    controller:'Controller1',    templateUrl:'partials/view1.html'}).when('/view2',{    controller: 'Controller2',    templateUrl: 'partials/view2.html'});$locationProvider.html5Mode(true); //activate HTML5 Mode
-</pre>
+```
 **根据上面的样例代码。**	
 	如果仅仅使用`$routeProvider`服务，则在主页面的 `a` 标签中需要加入 `#`符号：	
 	<br>
@@ -177,19 +177,20 @@ angular.module('myApp').config(function($routeProvider, ➥$locationProvider){}
 ####`$routeParams`
 	通过url的形式传过来的参数。
 例：
-	<pre>
+
+```
 	$routeProvider.
 	when('view/:firstparameter/:secondparameter', 
 	{
 		controller: 'testController',
 		templateUrl: 'partials/view.html'
 	});
-	</pre>
+```
 如上所示，其中参数**firstparameter**和 **secondparameter**就可以通过`$routeParams`的方式传入到view.html当中。	
 	
 	我们可以通过传入的参数做许多事情，类似可以通过在登录时讲用户名和密码通过该形式传入、验证来进入用户自己私有的页面。
 
-<pre>
+```
 	angular.module('myApp').controller('testController', 
 	function($routeParams, $scope, $location){
 		$scope.username = $routeParams.firstparameter;
@@ -204,7 +205,7 @@ angular.module('myApp').config(function($routeProvider, ➥$locationProvider){}
 			console.log('Can not pair the username');
 		}
 	})
-</pre>
+```
 <hr>
 
 ####比较有用的工具 `ng-template`(但不推荐)
@@ -264,9 +265,9 @@ resolve配置项是一个由key/value构成的对象。
 
 ####`$routeChangeSuccess` and `$routeChangeError`
 
-<pre>
+```
 	angular.module('myApp').run(function($rootScope){    $rootScope.$on('$routeChangeSuccess',function(){	//do something magical here. maybe stop the animation 		you started in        $routeChangeStart listener.    	});	});
-</pre>
+```
 
 `run()`方法在所有模块都成功加载的时候会被调用
 
