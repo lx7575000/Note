@@ -240,6 +240,10 @@ AngularJS会将 `script`标签中的内容加载到 `$templateCache` 服务当�
 	
 当所选中菜单的条件判断为真时，则执行所设定的样式属性。
 
+同时，`ng-class`允许我们将class类型都放在一个表达式当中：	
+`ng-class="{ <class-you-want> : <expression to be evaluated > }"`
+
+
 <hr>
 ####使用AngularJS 的输入框验证
 
