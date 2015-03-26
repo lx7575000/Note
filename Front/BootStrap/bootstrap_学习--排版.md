@@ -76,10 +76,13 @@ Bootstrap中的`.lead`样式来让段落显示突出。
 <p class='text-center'>
 <abbr title="attribute">缩略图例子</abbr>
 </p>
-**为缩略语添加.initialism可以将其font-size设置的更小些。**
+**为缩略语添加`.initialism`可以将其font-size设置的更小些。**
 <p class='text-center'>
 <abbr title="HyperText Markup Language" class="initialism">缩略图另一个例子，有木有觉得有点小了？</abbr>
 </p>
+
+##### 缩写
+
 ##### 地址格式`address`
 `<address>`标签用于来显示地址类型内容。
 **栗子：**

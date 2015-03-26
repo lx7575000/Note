@@ -1,0 +1,60 @@
+##Bootstrap 学习--表格
+###2015-03-24
+@(土鳖的学习笔记)
+
+#####下表样式用于表格中：
+<table>
+<tbody>
+	<tr>
+		<th>
+			类</th>
+		<th>描述</th>
+	</tr>
+	<tr>
+		<td>.table</td>
+		<td>增加一行分割线</td>
+	</tr>
+	<tr>
+		<td>.table-bordered</td>
+		<td>为所有表格的单元格添加边框</td>
+	</tr>
+	<tr>
+		<td>.table-hover</td>
+		<td>在tbody中任一行内启动鼠标悬停状态</td>
+	</tr>
+	<tr>
+		<td>.table-condensed</td>
+		<td>让表格更加紧凑</td>
+	</tr>
+</tbody>
+</table>
+
+#####下表用于表格的行或者单元格
+<table>
+	<tbody>
+		<tr>
+			<th>类</th>
+			<th>描述</th>
+		</tr>
+		<tr>
+			<td>.active</td>
+			<td>将悬停的颜色应用在行或者单元格上</td>
+		</tr>
+		<tr>
+			<td>.success</td>
+			<td>表示成功的操作</td>
+		</tr>
+		<tr>
+			<td>.info</td>
+			<td>表示信息变化的操作</td>
+		</tr>
+		<tr>
+			<td>.warning</td>
+			<td>表示一个警告操作</td>
+		</tr>
+		<tr>
+			<td>.danger</td>
+			<td>表示一个危险操作</td>
+		</tr>
+	</tbody>
+</table>
