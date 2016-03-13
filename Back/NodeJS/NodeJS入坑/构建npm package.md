@@ -61,6 +61,7 @@ function greet(name){
 因为在**package.json**中进行过声明，所以我们可以通过require()来调用这个模块。
 
 **我们可以通过以下几种方式来使用**
+
 ```
 $ node -e 'console.log(require("./index.js"))'
 
@@ -80,7 +81,7 @@ $ node -e 'console.log(require("./"))'
 ```
 环境： OS X系统
 
-$ export NODE_PATH = /usr/local/lib/node_modules
+$ export NODE_PATH=/usr/local/lib/node_modules
 ```
 通过该命令，来进行宏定义。以后我们使用`npm link`就会默认的将符号链接放入到**/usr/local/lib/node_modules**这个文件夹当中。
 
