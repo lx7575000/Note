@@ -78,3 +78,5 @@ undefined表示缺少值，即此处可以有值，但还没有定义
   2.  调用函数时，应该提供的参数没有提供，该参数等于undefined。
   3. 对象没有赋值的属性，该属性的值为undefined。
   4. 函数没有返回值时，默认返回undefined。
+
+#关于JavaScript中的**event loop**
